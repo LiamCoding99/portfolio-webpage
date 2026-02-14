@@ -13,3 +13,16 @@ run:
   env:
     - name: PORT
       value: "8000"
+    # Add your environment variables here
+    # NOTE: DO NOT commit sensitive values!
+    # Use AWS console to set actual values after deployment
+    - name: SMTP_HOST
+      value: "smtp.gmail.com"
+    - name: SMTP_PORT
+      value: "587"
+    # Set these in AWS Console after deployment:
+    # - SMTP_USER
+    # - SMTP_PASSWORD
+    # - EMAIL_FROM
+    # - EMAIL_TO
+    # - ALLOWED_ORIGINS
