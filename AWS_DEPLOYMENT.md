@@ -79,23 +79,41 @@ git push -u origin main
    Connect to GitHub: Authorize AWS to access your GitHub
    Repository: Select your portfolio repository
    Branch: main
+   Source directory: /backend          ← IMPORTANT!
    Deployment trigger: Automatic (deploys on push)
    ```
 
+   > **Note:** Source directory MUST be `/backend` since all backend code
+   > (`requirements.txt`, `main.py`, etc.) lives in the `backend/` folder.
+
 4. **Build Settings** (Step 2)
 
-   **Important:** Select "Use configuration file" - this disables manual environment variable input in this step.
+   **Important:** Select **"Configure all settings here"** (manual configuration, NOT configuration file).
 
    ```
-   Configuration file: Use configuration file  ← Select this!
-   File location: backend/apprunner.yaml
+   Configuration source: API (Configure all settings here)
+   Runtime: Python 3
+   Build command: pip3 install -r requirements.txt
+   Start command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+   Port: 8000
    ```
 
-   This uses your `apprunner.yaml` for build/runtime settings.
+   > **Gotchas we discovered:**
+   > - Use `pip3` not `pip` — `pip` is not on the PATH in App Runner's Python runtime
+   > - Use `python3 -m uvicorn` not `uvicorn` — same reason, `uvicorn` isn't on the PATH directly
+   > - Do NOT use a configuration file (`apprunner.yaml`) — it adds unnecessary complexity and runtime version issues
 
-   > **Note:** When using a config file, the "Add environment variable" option is disabled in Step 2. You'll add sensitive variables later via Configuration tab (more secure).
+5. **Environment Variables** (same step)
 
-5. **Service Settings** (Step 3: Configure Service)
+   Add only `PORT` for now to get the deployment working:
+
+   | Source | Name | Value |
+   |--------|------|-------|
+   | Plain text | `PORT` | `8000` |
+
+   You'll add SMTP/email variables later once the service is running.
+
+6. **Service Settings** (Step 3: Configure Service)
    ```
    Service name: portfolio-backend
    Virtual CPU: 1 vCPU (default)
@@ -104,31 +122,35 @@ git push -u origin main
    Health check: Default (/health endpoint)
    ```
 
-   **Skip environment variables for now** - they'll be hidden since you're using a config file.
-
-6. **Create Service** (Step 4: Review)
+7. **Create Service** (Step 4: Review)
    - Review your settings
    - Click **"Create & deploy"**
    - Wait 5-10 minutes for deployment
    - Copy your App Runner URL (e.g., `https://xxxxx.us-west-2.awsapprunner.com`)
 
-7. **Add Environment Variables After Deployment** ⭐ **IMPORTANT**
+8. **Add Email Environment Variables After Deployment** ⭐ **IMPORTANT**
 
-   Now add your sensitive credentials:
+   Once the service is deployed and running, add email credentials:
 
    a. **Go to your service** → Click **"Configuration"** tab
 
    b. **Scroll to "Environment variables"** → Click **"Edit"**
 
-   c. **Add each variable:**
+   c. **Add variables with the appropriate source type:**
+
+   **Plain text:**
    ```
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=587
-   SMTP_USER=your-email@gmail.com
-   SMTP_PASSWORD=your-app-password-here
    EMAIL_FROM=your-email@gmail.com
    EMAIL_TO=your-email@gmail.com
    ALLOWED_ORIGINS=https://main.xxxxx.amplifyapp.com
+   ```
+
+   **Secrets Manager** (for sensitive credentials):
+   ```
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASSWORD=your-app-password-here
    ```
 
    d. **Save changes** → App Runner automatically redeploys (2-3 minutes)
@@ -404,9 +426,25 @@ docker push <your-ecr-url>
 
 **Problem:** App Runner build fails
 ```bash
-# Check requirements.txt compatibility
-# Ensure Python 3.11 compatible
-# Check apprunner.yaml syntax
+# Use pip3, not pip (pip is not on the PATH)
+# Use python3 -m uvicorn, not uvicorn directly
+# Use manual configuration ("Configure all settings here"), not apprunner.yaml
+# Ensure Source Directory is set to /backend
+# Check requirements.txt for Python 3.11 compatibility
+```
+
+**Problem:** `apprunner.yaml not found`
+```bash
+# App Runner looks for apprunner.yaml at the root of the Source Directory
+# Solution: Use manual configuration instead of a config file
+# Or ensure Source Directory points to the folder containing apprunner.yaml
+```
+
+**Problem:** `pip: command not found` or `uvicorn: executable file not found`
+```bash
+# App Runner Python runtimes use pip3 and python3, not pip/python
+# Build command: pip3 install -r requirements.txt
+# Start command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 **Problem:** CORS errors
@@ -528,4 +566,4 @@ async def get_projects():
 ---
 
 **Built with AWS by Liam T. Nguyen**
-**Last Updated:** February 13, 2026
+**Last Updated:** February 14, 2026
