@@ -93,7 +93,7 @@ git push -u origin main
    ```
    Configuration source: API (Configure all settings here)
    Runtime: Python 3
-   Build command: pip3 install -r requirements.txt
+   Build command: pip3 install -r requirements.txt --target /app/backend/vendor
    Start command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
    Port: 8000
    ```
@@ -101,17 +101,20 @@ git push -u origin main
    > **Gotchas we discovered:**
    > - Use `pip3` not `pip` — `pip` is not on the PATH in App Runner's Python runtime
    > - Use `python3 -m uvicorn` not `uvicorn` — same reason, `uvicorn` isn't on the PATH directly
+   > - Use `--target /app/backend/vendor` with pip — App Runner uses a multi-stage Docker build where packages installed to system paths are NOT copied to the runtime container. Installing to `/app/backend/vendor` ensures packages persist.
    > - Do NOT use a configuration file (`apprunner.yaml`) — it adds unnecessary complexity and runtime version issues
+   > - All Python package directories MUST have `__init__.py` files — without them, imports like `from domain.entities.contact import ContactMessage` will fail on App Runner
 
 5. **Environment Variables** (same step)
-
-   Add only `PORT` for now to get the deployment working:
 
    | Source | Name | Value |
    |--------|------|-------|
    | Plain text | `PORT` | `8000` |
+   | Plain text | `PYTHONPATH` | `/app/backend/vendor` |
 
-   You'll add SMTP/email variables later once the service is running.
+   > **Note:** `PYTHONPATH` is required so Python can find packages installed to the vendor directory.
+   >
+   > You'll add SMTP/email variables later once the service is running.
 
 6. **Service Settings** (Step 3: Configure Service)
    ```
@@ -443,8 +446,34 @@ docker push <your-ecr-url>
 **Problem:** `pip: command not found` or `uvicorn: executable file not found`
 ```bash
 # App Runner Python runtimes use pip3 and python3, not pip/python
-# Build command: pip3 install -r requirements.txt
+# Build command: pip3 install -r requirements.txt --target /app/backend/vendor
 # Start command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+**Problem:** `No module named uvicorn` (or any package) at runtime
+```bash
+# App Runner uses multi-stage Docker builds. Packages installed to system
+# paths during build are NOT copied to the runtime container.
+# Fix: Install with --target to a directory under /app:
+#   Build command: pip3 install -r requirements.txt --target /app/backend/vendor
+# And set PYTHONPATH environment variable:
+#   PYTHONPATH=/app/backend/vendor
+```
+
+**Problem:** `ModuleNotFoundError` for your own modules (domain, application, etc.)
+```bash
+# Ensure every Python package directory has an __init__.py file:
+#   backend/domain/__init__.py
+#   backend/domain/entities/__init__.py
+#   backend/application/__init__.py
+#   backend/application/use_cases/__init__.py
+#   backend/infrastructure/__init__.py
+#   backend/infrastructure/email/__init__.py
+#   backend/infrastructure/repositories/__init__.py
+#   backend/presentation/__init__.py
+#   backend/presentation/api/__init__.py
+#   backend/presentation/api/routes/__init__.py
+# These can be empty files, but they MUST exist.
 ```
 
 **Problem:** CORS errors

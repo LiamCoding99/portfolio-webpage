@@ -28,7 +28,7 @@ A modern, full-stack portfolio website built with **React**, **FastAPI**, and **
 - ✅ **Email Integration** - Gmail SMTP for contact form submissions
 - ✅ **CORS Configured** - Secure cross-origin resource sharing
 - ✅ **Input Validation** - Pydantic models with comprehensive validation
-- ✅ **Deployment Ready** - Docker, Railway, and Render configurations included
+- ✅ **Deployment Ready** - AWS App Runner, Docker, Railway, and Render configurations included
 
 ---
 
@@ -51,10 +51,10 @@ A modern, full-stack portfolio website built with **React**, **FastAPI**, and **
 
 ### Development & Deployment
 - **Version Control:** Git & GitHub
-- **Frontend Hosting:** Vercel (recommended)
-- **Backend Hosting:** Railway / Render (recommended)
+- **Frontend Hosting:** AWS Amplify (recommended) / Vercel
+- **Backend Hosting:** AWS App Runner (recommended) / Railway / Render
 - **Containerization:** Docker
-- **CI/CD:** Vercel & Railway auto-deploy
+- **CI/CD:** Auto-deploy from GitHub (Amplify + App Runner)
 
 ---
 
@@ -315,28 +315,42 @@ Edit `frontend/public/index.html`:
 
 ## 🚀 Deployment
 
-### Frontend (Vercel - Recommended)
+### AWS Deployment (Recommended)
 
-1. Push your code to GitHub
-2. Go to [vercel.com](https://vercel.com)
-3. Import your repository
-4. Vercel auto-detects React and deploys!
-5. Add environment variables:
-   - `REACT_APP_GA_TRACKING_ID`
-   - `REACT_APP_API_URL` (your backend URL)
+See [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) for the complete step-by-step guide.
 
-### Backend (Railway - Recommended)
+**Quick overview:**
 
-1. Go to [railway.app](https://railway.app)
-2. Create new project → Deploy from GitHub
-3. Select your repository
-4. Railway auto-detects Python/FastAPI
-5. Add environment variables (same as `.env`)
-6. Deploy!
+#### Backend (AWS App Runner)
 
-**Alternative:** Render, Heroku, or any platform supporting Docker
+1. Create App Runner service → Connect GitHub repo
+2. Set **Source directory** to `/backend`
+3. Use **manual configuration** (not config file):
+   ```
+   Build command:  pip3 install -r requirements.txt --target /app/backend/vendor
+   Start command:  python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+   Port:           8000
+   ```
+4. Set environment variables:
+   - `PORT` = `8000`
+   - `PYTHONPATH` = `/app/backend/vendor`
+5. Deploy and add SMTP/email env vars after service is running
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions (if available).
+> **Key gotchas:** Use `pip3` not `pip`, use `python3 -m uvicorn` not `uvicorn`, install packages with `--target` so they persist to the runtime container.
+
+#### Frontend (AWS Amplify)
+
+1. Create Amplify app → Connect GitHub repo
+2. Configure build to `cd frontend && npm ci && npm run build`
+3. Set `REACT_APP_API_URL` to your App Runner URL
+4. Deploy
+
+### Alternative Deployment Options
+
+- **Frontend:** Vercel, Netlify
+- **Backend:** Railway, Render, or any platform supporting Docker
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for alternative deployment instructions.
 
 ---
 
@@ -453,8 +467,8 @@ You are free to use this code as a template for your own portfolio!
 - **Material-UI** - For the excellent React component library
 - **FastAPI** - For the modern, fast Python framework
 - **React** - For the powerful frontend framework
-- **Vercel** - For seamless frontend hosting
-- **Railway** - For easy backend deployment
+- **AWS App Runner** - For scalable backend hosting
+- **AWS Amplify** - For seamless frontend hosting
 
 ---
 
@@ -523,4 +537,4 @@ If you found this portfolio template helpful, please consider:
 
 **Built with ❤️ using React & FastAPI**
 
-**Last Updated:** February 13, 2026
+**Last Updated:** February 14, 2026

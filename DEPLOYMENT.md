@@ -1,6 +1,9 @@
-# Deployment Guide
+# Deployment Guide (Vercel + Railway/Render)
 
-Complete guide for deploying your portfolio website.
+Alternative deployment guide using Vercel and Railway/Render.
+
+> **Recommended:** For AWS deployment (App Runner + Amplify), see [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) instead.
+> AWS deployment provides better resume impact and production-grade infrastructure.
 
 ## Frontend Deployment (Vercel)
 
@@ -237,3 +240,9 @@ For issues or questions:
   - [Render Docs](https://render.com/docs)
 
 Good luck with your deployment! 🚀
+
+---
+
+**Last Updated:** February 14, 2026
+
+> **Prefer AWS?** See [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) for the recommended production deployment.

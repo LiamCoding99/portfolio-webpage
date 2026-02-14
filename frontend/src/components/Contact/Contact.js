@@ -41,7 +41,8 @@ const Contact = () => {
     setAlert({ show: false, type: 'success', message: '' });
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/contact', formData);
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${API_URL}/api/v1/contact`, formData);
 
       setAlert({
         show: true,

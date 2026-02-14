@@ -15,7 +15,8 @@ const Hero = () => {
   const theme = useTheme();
 
   const handleResumeDownload = () => {
-    window.open('http://localhost:8000/api/v1/resume/download', '_blank');
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+    window.open(`${API_URL}/api/v1/resume/download`, '_blank');
   };
 
   const handleContactClick = () => {

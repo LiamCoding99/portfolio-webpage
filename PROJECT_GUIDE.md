@@ -70,6 +70,13 @@ cd backend
 uvicorn main:app --reload
 ```
 
+> **If deployed on AWS App Runner:** Just push to GitHub — App Runner auto-redeploys.
+> ```bash
+> git add backend/infrastructure/repositories/project_repository.py
+> git commit -m "Add new project"
+> git push
+> ```
+
 ### Step 4: Verify in Frontend
 
 1. Open http://localhost:3000
@@ -461,5 +468,6 @@ const fetchProjects = async () => {
 ---
 
 **Questions?** Check the main project documentation: `claude_main_prompt.md`
+**Deployment?** See [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) for AWS or [DEPLOYMENT.md](DEPLOYMENT.md) for Vercel/Railway.
 
-**Last Updated:** February 13, 2026
+**Last Updated:** February 14, 2026
