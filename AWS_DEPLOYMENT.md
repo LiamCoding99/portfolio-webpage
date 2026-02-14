@@ -82,47 +82,62 @@ git push -u origin main
    Deployment trigger: Automatic (deploys on push)
    ```
 
-4. **Build Settings**
+4. **Build Settings** (Step 2)
+
+   **Important:** Select "Use configuration file" - this disables manual environment variable input in this step.
+
    ```
-   Configuration file: Use configuration file
+   Configuration file: Use configuration file  ← Select this!
    File location: backend/apprunner.yaml
    ```
 
-   OR manually configure:
-   ```
-   Build command: pip install -r requirements.txt
-   Start command: uvicorn main:app --host 0.0.0.0 --port 8000
-   Port: 8000
-   ```
+   This uses your `apprunner.yaml` for build/runtime settings.
 
-5. **Service Settings**
+   > **Note:** When using a config file, the "Add environment variable" option is disabled in Step 2. You'll add sensitive variables later via Configuration tab (more secure).
+
+5. **Service Settings** (Step 3: Configure Service)
    ```
    Service name: portfolio-backend
    Virtual CPU: 1 vCPU (default)
    Memory: 2 GB (default)
+   Auto scaling: Default settings
+   Health check: Default (/health endpoint)
    ```
 
-6. **Environment Variables**
+   **Skip environment variables for now** - they'll be hidden since you're using a config file.
 
-   Click "Add environment variable" for each:
+6. **Create Service** (Step 4: Review)
+   - Review your settings
+   - Click **"Create & deploy"**
+   - Wait 5-10 minutes for deployment
+   - Copy your App Runner URL (e.g., `https://xxxxx.us-west-2.awsapprunner.com`)
+
+7. **Add Environment Variables After Deployment** ⭐ **IMPORTANT**
+
+   Now add your sensitive credentials:
+
+   a. **Go to your service** → Click **"Configuration"** tab
+
+   b. **Scroll to "Environment variables"** → Click **"Edit"**
+
+   c. **Add each variable:**
    ```
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=587
    SMTP_USER=your-email@gmail.com
-   SMTP_PASSWORD=your-gmail-app-password-here
+   SMTP_PASSWORD=your-app-password-here
    EMAIL_FROM=your-email@gmail.com
    EMAIL_TO=your-email@gmail.com
    ALLOWED_ORIGINS=https://main.xxxxx.amplifyapp.com
    ```
 
+   d. **Save changes** → App Runner automatically redeploys (2-3 minutes)
+
    > **Note:** Update `ALLOWED_ORIGINS` after deploying frontend!
 
-7. **Create Service**
-   - Click "Next" → "Next" → "Create & deploy"
-   - Wait 5-10 minutes for deployment
-   - Copy your App Runner URL (e.g., `https://xxxxx.us-west-2.awsapprunner.com`)
+### Step 3: Verify Deployment
 
-### Step 3: Test Backend
+After environment variables are saved and the service redeploys:
 
 ```bash
 # Test health endpoint
@@ -130,6 +145,14 @@ curl https://your-apprunner-url.awsapprunner.com/health
 
 # Check API docs
 # Visit: https://your-apprunner-url.awsapprunner.com/docs
+```
+
+**Expected response:**
+```json
+{
+  "status": "healthy",
+  "environment": "production"
+}
 ```
 
 ---
