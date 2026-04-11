@@ -78,6 +78,17 @@ export const projects: Project[] = [
     type: "project",
   },
   {
+    id: "untiled-app",
+    title: "Untiled App — Mental Wellness Platform",
+    description:
+      "Senior capstone project with a team of 6 at Tilted Lab Inc. Built a mental wellness webapp for applicants to track and manage their wellbeing. The core focus: applying Agile methodology in a real-world product cycle — sprints, standups, retrospectives, and iterative delivery from discovery to production.",
+    image: "/projects/tilted-lab-inc.png",
+    tags: ["React", "JavaScript", "Tailwind CSS", "Firebase"],
+    liveUrl: "https://untilt.web.app/",
+    featured: false,
+    type: "project",
+  },
+  {
     id: "meat-worker-solution",
     title: "Meat Worker Solution — AI Lead Capture",
     description:
