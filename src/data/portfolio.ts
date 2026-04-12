@@ -52,6 +52,8 @@ export const owner = {
 // To add a project: append one object below.
 // To add a research paper: set type: "research" and paper: "<url>".
 // ---------------------------------------------------------------
+export type ProjectCategory = "personal" | "work" | "university" | "research";
+
 export type Project = {
   id: string;
   title: string;
@@ -62,6 +64,7 @@ export type Project = {
   githubUrl?: string;
   featured?: boolean;
   type: "project" | "research";
+  category: ProjectCategory;
   paper?: string;
 };
 
@@ -76,6 +79,7 @@ export const projects: Project[] = [
     liveUrl: "https://speak.autos",
     featured: true,
     type: "project",
+    category: "personal",
   },
   {
     id: "smartfitness-automation",
@@ -86,6 +90,7 @@ export const projects: Project[] = [
     tags: ["n8n", "Docker", "OpenAI", "fal.ai", "FFmpeg", "YouTube API", "Google Sheets"],
     featured: true,
     type: "project",
+    category: "personal",
   },
   {
     id: "untiled-app",
@@ -97,6 +102,7 @@ export const projects: Project[] = [
     liveUrl: "https://untilt.web.app/",
     featured: false,
     type: "project",
+    category: "university",
   },
   {
     id: "meat-worker-solution",
@@ -108,6 +114,7 @@ export const projects: Project[] = [
     liveUrl: "https://meatworkersolution.com.au",
     featured: true,
     type: "project",
+    category: "work",
   },
 ];
 
