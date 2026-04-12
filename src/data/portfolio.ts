@@ -88,6 +88,7 @@ export const projects: Project[] = [
       "Zero-touch content engine: GPT-4o-mini writes the script, OpenAI TTS voices it, fal.ai Hailuo renders anime-style fitness clips, FFmpeg merges audio + video, then auto-uploads to YouTube and logs to Google Sheets — all orchestrated in a self-hosted n8n workflow running on Docker.",
     image: "/projects/n8n-youtube-automation-flow.png",
     tags: ["n8n", "Docker", "OpenAI", "fal.ai", "FFmpeg", "YouTube API", "Google Sheets"],
+    liveUrl: "https://www.youtube.com/channel/UClXPPa-7ueeCAmpoO72LJ9A",
     featured: true,
     type: "project",
     category: "personal",
