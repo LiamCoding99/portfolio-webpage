@@ -23,18 +23,18 @@ const TABS: Tab[] = [
   {
     id: "all",
     label: "All",
-    dot: "#e8eaf0",
-    border: "#e8eaf0",
-    glow: "#e8eaf020",
-    text: "#e8eaf0",
-  },
-  {
-    id: "personal",
-    label: "Personal Projects",
     dot: "#00f5c4",
     border: "#00f5c4",
     glow: "#00f5c420",
     text: "#00f5c4",
+  },
+  {
+    id: "personal",
+    label: "Personal Projects",
+    dot: "#e8eaf0",
+    border: "#e8eaf0",
+    glow: "#e8eaf020",
+    text: "#e8eaf0",
   },
   {
     id: "work",
