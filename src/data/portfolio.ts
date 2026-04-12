@@ -75,7 +75,14 @@ export const projects: Project[] = [
     description:
       "Production AI voice agent: Twilio PSTN → Deepgram STT → GPT-4.1 Mini → ElevenLabs TTS. Multi-tenant dashboard (Next.js + Supabase RLS). Split-domain infra: voice server on DigitalOcean, frontend on Vercel.",
     image: "/projects/speak-autos.png",
-    tags: ["Next.js", "Node.js", "Supabase", "Twilio", "OpenAI", "DigitalOcean"],
+    tags: [
+      "Next.js",
+      "Node.js",
+      "Supabase",
+      "Twilio",
+      "OpenAI",
+      "DigitalOcean",
+    ],
     liveUrl: "https://speak.autos",
     featured: true,
     type: "project",
@@ -87,7 +94,15 @@ export const projects: Project[] = [
     description:
       "Zero-touch content engine: GPT-4o-mini writes the script, OpenAI TTS voices it, fal.ai Hailuo renders anime-style fitness clips, FFmpeg merges audio + video, then auto-uploads to YouTube and logs to Google Sheets — all orchestrated in a self-hosted n8n workflow running on Docker.",
     image: "/projects/n8n-youtube-automation-flow.png",
-    tags: ["n8n", "Docker", "OpenAI", "fal.ai", "FFmpeg", "YouTube API", "Google Sheets"],
+    tags: [
+      "n8n",
+      "Docker",
+      "OpenAI",
+      "fal.ai",
+      "FFmpeg",
+      "YouTube API",
+      "Google Sheets",
+    ],
     liveUrl: "https://www.youtube.com/channel/UClXPPa-7ueeCAmpoO72LJ9A",
     featured: true,
     type: "project",
@@ -258,7 +273,7 @@ export const timeline: TimelineEntry[] = [
   },
   {
     id: "cal-poly",
-    date: "2023 – June 2026 (expected)",
+    date: "Aug 2023 – June 2026 (expected)",
     duration: "3 years",
     org: "Cal Poly Pomona",
     role: "B.S. Computer Science — GPA 3.61",
@@ -291,7 +306,7 @@ export const timeline: TimelineEntry[] = [
   },
   {
     id: "santa-ana-college",
-    date: "2021 – June 2023",
+    date: "Aug 2021 – June 2023",
     duration: "2 years",
     org: "Santa Ana Community College",
     role: "A.S. Computer Science — GPA 3.9",
