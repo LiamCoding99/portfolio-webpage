@@ -80,7 +80,15 @@ export default function HexNav() {
   return (
     <>
       {/* Fixed top bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4">
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
+        style={{
+          background: "rgba(13, 15, 20, 0.55)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(0, 245, 196, 0.08)",
+        }}
+      >
         <div
           className="font-orbitron text-accent-cyan text-lg tracking-widest font-bold cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
