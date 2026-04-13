@@ -132,6 +132,19 @@ export const projects: Project[] = [
     type: "project",
     category: "work",
   },
+  {
+    id: "sap-1-simulator",
+    title: "SAP-1 CPU Simulator",
+    description:
+      "Cycle-accurate, browser-based simulator of the SAP-1 8-bit CPU in vanilla JS. Step through programs one T-state at a time — every register, flag, and control signal updates live. Includes a two-pass assembler with label support and a retro-terminal UI.",
+    image: "/projects/sap-1.png",
+    tags: ["HTML/CSS", "JavaScript", "Computer Architecture", "Assembler"],
+    liveUrl: "https://sap-1-simulation.vercel.app/",
+    githubUrl: "https://github.com/LiamCoding99/sap-1-simulation",
+    featured: false,
+    type: "project",
+    category: "personal",
+  },
 ];
 
 // ---------------------------------------------------------------
