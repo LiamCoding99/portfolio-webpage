@@ -109,20 +109,13 @@ function ProjectCard({ project }: { project: Project }) {
           </div>
         )}
 
-        {/* Badges — top right stack */}
+        {/* Badges — top right: featured only */}
         <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
           {project.featured && (
-            <span className="font-mono text-[9px] tracking-widest px-2 py-0.5 text-base font-bold" style={{ background: "#00f5c4" }}>
+            <span className="font-mono text-[9px] tracking-widest px-2 py-0.5 font-bold text-black" style={{ background: "#00f5c4" }}>
               FEATURED
             </span>
           )}
-          {/* Category badge */}
-          <span
-            className="font-mono text-[9px] tracking-widest px-2 py-0.5 font-bold border"
-            style={{ color: catBadge.color, background: catBadge.bg, borderColor: `${catBadge.color}40` }}
-          >
-            {catBadge.label}
-          </span>
         </div>
 
         {/* Bottom fade */}
@@ -151,7 +144,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Links */}
-        <div className="flex gap-3 pt-3 border-t border-border-dim">
+        <div className="flex items-center gap-3 pt-3 border-t border-border-dim">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
@@ -185,6 +178,13 @@ function ProjectCard({ project }: { project: Project }) {
               PAPER
             </a>
           )}
+          {/* Category badge — bottom right */}
+          <span
+            className="ml-auto font-mono text-[9px] tracking-widest px-2 py-0.5 font-bold border"
+            style={{ color: catBadge.color, background: catBadge.bg, borderColor: `${catBadge.color}40` }}
+          >
+            {catBadge.label}
+          </span>
         </div>
       </div>
     </motion.div>
