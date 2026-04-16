@@ -6,10 +6,10 @@ import { Home, Mail, User, FolderKanban, Cpu, X, Menu } from "lucide-react";
 
 const NAV_NODES = [
   { label: "HOME", icon: Home, href: "#hero", position: "top-center" },
-  { label: "CONTACT", icon: Mail, href: "#footer", position: "mid-left" },
   { label: "ABOUT", icon: User, href: "#overview", position: "mid-right" },
   { label: "PROJECTS", icon: FolderKanban, href: "#projects", position: "bot-left" },
   { label: "SKILLS", icon: Cpu, href: "#skills", position: "bot-right" },
+  { label: "CONTACT", icon: Mail, href: "#footer", position: "mid-left" },
 ];
 
 const nodeVariants = {
@@ -74,6 +74,11 @@ function HexNode({
   );
 }
 
+function scrollTo(href: string) {
+  const el = document.querySelector(href);
+  el?.scrollIntoView({ behavior: "smooth" });
+}
+
 export default function HexNav() {
   const [open, setOpen] = useState(false);
 
@@ -95,9 +100,25 @@ export default function HexNav() {
         >
           &lt;LN /&gt;
         </div>
+
+        {/* Desktop nav links — hidden on tablet/mobile */}
+        <div className="hidden lg:flex items-center gap-1">
+          {NAV_NODES.map(({ label, icon: Icon, href }) => (
+            <button
+              key={label}
+              onClick={() => scrollTo(href)}
+              className="flex items-center gap-2 px-4 py-2 font-mono text-[11px] tracking-[0.18em] text-accent-cyan/70 hover:text-accent-cyan uppercase transition-colors duration-200 group"
+            >
+              <Icon className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Hamburger — only on tablet/mobile */}
         <button
           onClick={() => setOpen(true)}
-          className="w-10 h-10 flex items-center justify-center border border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-base transition-all duration-200"
+          className="lg:hidden w-10 h-10 flex items-center justify-center border border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-[#0d0f14] transition-all duration-200"
           aria-label="Open navigation"
           style={{ boxShadow: "0 0 10px #00f5c440" }}
         >
@@ -148,8 +169,8 @@ export default function HexNav() {
                 <HexNode {...NAV_NODES[0]} index={0} onClose={() => setOpen(false)} />
               </div>
 
-              {/* CONTACT — mid left */}
-              <div className="absolute top-[90px] left-0">
+              {/* ABOUT — mid right */}
+              <div className="absolute top-[90px] right-0">
                 <HexNode {...NAV_NODES[1]} index={1} onClose={() => setOpen(false)} />
               </div>
 
@@ -170,19 +191,19 @@ export default function HexNav() {
                 }}
               />
 
-              {/* ABOUT — mid right */}
-              <div className="absolute top-[90px] right-0">
-                <HexNode {...NAV_NODES[2]} index={2} onClose={() => setOpen(false)} />
+              {/* CONTACT — mid left */}
+              <div className="absolute top-[90px] left-0">
+                <HexNode {...NAV_NODES[4]} index={2} onClose={() => setOpen(false)} />
               </div>
 
               {/* PROJECTS — bottom left */}
               <div className="absolute bottom-0 left-0">
-                <HexNode {...NAV_NODES[3]} index={3} onClose={() => setOpen(false)} />
+                <HexNode {...NAV_NODES[2]} index={3} onClose={() => setOpen(false)} />
               </div>
 
               {/* SKILLS — bottom right */}
               <div className="absolute bottom-0 right-0">
-                <HexNode {...NAV_NODES[4]} index={4} onClose={() => setOpen(false)} />
+                <HexNode {...NAV_NODES[3]} index={4} onClose={() => setOpen(false)} />
               </div>
             </div>
           </motion.div>
