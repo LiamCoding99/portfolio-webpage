@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, Mail, User, FolderKanban, Cpu, X, Menu } from "lucide-react";
 
@@ -81,11 +81,31 @@ function scrollTo(href: string) {
 
 export default function HexNav() {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < 10) {
+        setVisible(true);
+      } else if (currentY > lastScrollY.current) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       {/* Fixed top bar */}
-      <nav
+      <motion.nav
+        animate={{ y: visible ? 0 : "-100%" }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
         style={{
           background: "rgba(13, 15, 20, 0.55)",
@@ -124,7 +144,7 @@ export default function HexNav() {
         >
           <Menu className="w-5 h-5" />
         </button>
-      </nav>
+      </motion.nav>
 
       {/* Full-screen overlay */}
       <AnimatePresence>
