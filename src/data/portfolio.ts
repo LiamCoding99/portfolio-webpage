@@ -11,12 +11,12 @@ export const owner = {
   github: "LiamCoding99",
   linkedin: "liam-th-nguyen",
   bio: [
-    "I'm a full-stack developer at Cal Poly Pomona (CS, GPA 3.61, graduating June 2026), building production AI systems that actually ship. From voice receptionists to multi-tenant SaaS dashboards — I close the loop between prototype and prod.",
+    "I'm a full-stack developer at Cal Poly Pomona (CS, GPA 3.60, graduating June 2026), building production AI systems that actually ship. From voice receptionists to multi-tenant SaaS dashboards — I close the loop between prototype and prod.",
     "My focus is the intersection of LLM orchestration, real-time infrastructure, and clean full-stack product work. I think in systems, build for scale, and care obsessively about the developer experience on both sides of the API.",
   ],
   stats: [
     { value: "2+", label: "Years Experience" },
-    { value: "3.61", label: "GPA" },
+    { value: "3.60", label: "GPA" },
     { value: "5+", label: "Projects Shipped" },
   ],
   overview_cards: [
@@ -289,7 +289,7 @@ export const timeline: TimelineEntry[] = [
     date: "Aug 2023 – June 2026 (expected)",
     duration: "3 years",
     org: "Cal Poly Pomona",
-    role: "B.S. Computer Science — GPA 3.61",
+    role: "B.S. Computer Science — GPA 3.60",
     icon: "education",
     points: ["Focus on AI systems, full-stack web, and cloud infrastructure"],
   },
