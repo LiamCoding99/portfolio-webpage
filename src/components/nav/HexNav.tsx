@@ -201,14 +201,14 @@ export default function HexNav() {
             </button>
 
             {/* Hex node layout */}
-            <div className="relative w-[290px] h-[260px] sm:w-[340px] sm:h-[280px]">
+            <div className="relative w-[290px] h-[360px] sm:w-[320px] sm:h-[380px]">
               {/* HOME — top center */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2">
                 <HexNode {...NAV_NODES[0]} index={0} onClose={() => setOpen(false)} />
               </div>
 
               {/* ABOUT — mid right */}
-              <div className="absolute top-[80px] right-0 sm:top-[90px]">
+              <div className="absolute top-[120px] right-0 sm:top-[130px]">
                 <HexNode {...NAV_NODES[1]} index={1} onClose={() => setOpen(false)} />
               </div>
 
@@ -218,7 +218,7 @@ export default function HexNav() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ delay: 0.15, type: "spring" }}
-                className="absolute top-[100px] left-1/2 sm:top-[112px]"
+                className="absolute top-[148px] left-1/2"
                 style={{
                   width: 16,
                   height: 16,
@@ -229,7 +229,7 @@ export default function HexNav() {
               />
 
               {/* CONTACT — mid left */}
-              <div className="absolute top-[80px] left-0 sm:top-[90px]">
+              <div className="absolute top-[120px] left-0 sm:top-[130px]">
                 <HexNode {...NAV_NODES[4]} index={2} onClose={() => setOpen(false)} />
               </div>
 
