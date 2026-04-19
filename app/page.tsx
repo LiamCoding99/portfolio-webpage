@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <HexNav />
-      <main>
+      <main className="pt-16 lg:pt-0">
         <Hero />
         <Overview />
         <Projects />
