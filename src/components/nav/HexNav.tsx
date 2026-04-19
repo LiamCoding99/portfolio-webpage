@@ -12,16 +12,34 @@ const NAV_NODES = [
   { label: "CONTACT", icon: Mail, href: "#footer", position: "mid-left" },
 ];
 
+// Offsets from container center to each node's center (render order: HOME, ABOUT, CONTACT, PROJECTS, SKILLS)
+const SPREAD_OFFSETS = [
+  { x: 0,    y: -144 },
+  { x: 109,  y: -24  },
+  { x: -109, y: -24  },
+  { x: -109, y: 124  },
+  { x: 109,  y: 124  },
+];
+
 const nodeVariants = {
-  hidden: { scale: 0, opacity: 0 },
+  hidden: (i: number) => ({
+    scale: 0,
+    opacity: 0,
+    x: -SPREAD_OFFSETS[i].x,
+    y: -SPREAD_OFFSETS[i].y,
+  }),
   visible: (i: number) => ({
     scale: 1,
     opacity: 1,
+    x: 0,
+    y: 0,
     transition: { delay: i * 0.08, type: "spring" as const, stiffness: 260, damping: 20 },
   }),
   exit: (i: number) => ({
     scale: 0,
     opacity: 0,
+    x: -SPREAD_OFFSETS[i].x,
+    y: -SPREAD_OFFSETS[i].y,
     transition: { delay: (NAV_NODES.length - i) * 0.05, duration: 0.2 },
   }),
 };
@@ -212,21 +230,6 @@ export default function HexNav() {
                 <HexNode {...NAV_NODES[1]} index={1} onClose={() => setOpen(false)} />
               </div>
 
-              {/* Center diamond */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ delay: 0.15, type: "spring" }}
-                className="absolute top-[148px] left-1/2"
-                style={{
-                  width: 16,
-                  height: 16,
-                  background: "#00f5c4",
-                  transform: "translateX(-50%) rotate(45deg)",
-                  boxShadow: "0 0 20px #00f5c4, 0 0 40px #00f5c480",
-                }}
-              />
 
               {/* CONTACT — mid left */}
               <div className="absolute top-[120px] left-0 sm:top-[130px]">
