@@ -26,6 +26,8 @@ const nodeVariants = {
   }),
 };
 
+const HEX_CLIP = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
+
 function HexNode({
   label,
   icon: Icon,
@@ -55,17 +57,33 @@ function HexNode({
         }, 200);
       }}
     >
+      {/* Outer layer = border color */}
       <div
-        className="relative w-20 h-20 flex items-center justify-center"
         style={{
-          clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-          background: "#141820",
-          border: "2px solid #00f5c4",
-          boxShadow: "0 0 15px #00f5c440, inset 0 0 10px #00f5c410",
-          transition: "all 0.3s",
+          width: 72,
+          height: 72,
+          clipPath: HEX_CLIP,
+          background: "#00f5c4",
+          boxShadow: "0 0 18px #00f5c460",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <Icon className="w-7 h-7 text-accent-cyan group-hover:scale-110 transition-transform" />
+        {/* Inner layer = dark fill */}
+        <div
+          style={{
+            width: 63,
+            height: 63,
+            clipPath: HEX_CLIP,
+            background: "#0d1117",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Icon className="w-6 h-6 text-accent-cyan group-hover:scale-110 transition-transform" />
+        </div>
       </div>
       <span className="font-mono text-[10px] tracking-[0.2em] text-accent-cyan uppercase">
         {label}
@@ -182,15 +200,15 @@ export default function HexNav() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Hex node layout matching reference screenshot */}
-            <div className="relative w-[340px] h-[280px]">
+            {/* Hex node layout */}
+            <div className="relative w-[290px] h-[260px] sm:w-[340px] sm:h-[280px]">
               {/* HOME — top center */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2">
                 <HexNode {...NAV_NODES[0]} index={0} onClose={() => setOpen(false)} />
               </div>
 
               {/* ABOUT — mid right */}
-              <div className="absolute top-[90px] right-0">
+              <div className="absolute top-[80px] right-0 sm:top-[90px]">
                 <HexNode {...NAV_NODES[1]} index={1} onClose={() => setOpen(false)} />
               </div>
 
@@ -200,19 +218,18 @@ export default function HexNav() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ delay: 0.15, type: "spring" }}
-                className="absolute top-[112px] left-1/2 -translate-x-1/2"
+                className="absolute top-[100px] left-1/2 sm:top-[112px]"
                 style={{
-                  width: 20,
-                  height: 20,
+                  width: 16,
+                  height: 16,
                   background: "#00f5c4",
                   transform: "translateX(-50%) rotate(45deg)",
                   boxShadow: "0 0 20px #00f5c4, 0 0 40px #00f5c480",
-                  animation: "pulseGlow 2s ease-in-out infinite",
                 }}
               />
 
               {/* CONTACT — mid left */}
-              <div className="absolute top-[90px] left-0">
+              <div className="absolute top-[80px] left-0 sm:top-[90px]">
                 <HexNode {...NAV_NODES[4]} index={2} onClose={() => setOpen(false)} />
               </div>
 
